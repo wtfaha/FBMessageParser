@@ -9,8 +9,8 @@
 	Web臉書對話群組-抓取資料
 		1.txt、2.txt...等
 
-4.取得的txt等資料放入指定位置(目前是E:/fbMessage)
+4. 取得的txt等資料放入指定位置(目前是E:/fbMessage)
 
-5.執行FBMessageParser專案
+5. 執行FBMessageParser專案
 
-6.取得excel檔
+6. 取得excel檔
