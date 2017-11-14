@@ -10,5 +10,7 @@
 		1.txt、2.txt...等
 
 4.取得的txt等資料放入指定位置(目前是E:/fbMessage)
+
 5.執行FBMessageParser專案
+
 6.取得excel檔
