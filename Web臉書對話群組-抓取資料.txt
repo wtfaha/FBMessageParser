@@ -1,0 +1,84 @@
+var messages = [];
+function start()
+{
+	getMessages(0);
+	saveTextAsFile(messages, filename);
+}
+start();
+
+//getMessages
+function getMessages(t)
+{
+	var items = document.getElementsByClassName("voice acw abt");
+	console.log("items.length : " + items.length);
+	for(var i = 0 ; i < items.length ;++i){
+		  console.log("(a)[0].text : " + items[i].getElementsByTagName("strong")[0].innerHTML);
+		  console.log("(a)[0].href : " + items[i].getElementsByTagName("a")[0].href);
+		  console.log("(span)[0] : " + items[i].getElementsByTagName("span")[0].innerHTML);
+		  console.log("(abbr)[0] : " + items[i].getElementsByTagName("abbr")[0].innerHTML);
+
+		  //getName
+		  messages.push(items[i].getElementsByTagName("strong")[0].innerHTML);
+		  messages.push("\\n");
+		  //getPersonFbLink
+		  messages.push(items[i].getElementsByTagName("a")[0].href);	
+		  messages.push("\\n");
+		  //getTime
+		  messages.push(items[i].getElementsByTagName("abbr")[0].innerHTML);	
+		  messages.push("\\n");
+		  
+		  /*
+		   messages.push(
+			items[i].getElementsByTagName("strong")[0].innerHTML+	//getName
+			"\n"+
+			items[i].getElementsByTagName("a")[0].href +			//getPersonFbLink
+			"\n"+ 
+			items[i].getElementsByTagName("abbr")[0].innerHTML+		//getTime
+			"\n" 
+		  );
+		  */
+		  
+		  var listitems = items[i].querySelectorAll(".msg span");	//getMessages
+		  for(var j = 0 ; j < listitems.length ; j++){  
+				 console.log("(listitems)[0] : " + listitems[j].innerHTML);
+				 messages.push(listitems[j].innerHTML+"\\n"); 
+		  }
+		  messages.push("\n");
+	}
+	messages = messages.join("");	//connect with "", not connect with ","
+	console.log("messages : " + messages);
+	//open page
+	//var w = window.open("about:blank","_blank");
+	//w.document.body.innerHTML ="<pre>"+messages+"</pre>";
+}
+
+
+function saveTextAsFile(text, filename)
+{
+	var textToWrite = text;
+	var textFileAsBlob = new Blob([textToWrite], {type:'text/plain'});
+	var fileNameToSaveAs = filename;
+
+	var downloadLink = document.createElement("a");
+	downloadLink.download = fileNameToSaveAs;
+	downloadLink.innerHTML = "Download File";
+	if (window.webkitURL != null)
+	{
+		// Chrome allows the link to be clicked
+		// without actually adding it to the DOM.
+		downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob);
+	}
+	else
+	{
+		// Firefox requires the link to be added to the DOM
+		// before it can be clicked.
+		downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+		downloadLink.onclick = destroyClickedElement;
+		downloadLink.style.display = "none";
+		document.body.appendChild(downloadLink);
+	}
+
+	downloadLink.click();
+}
+
+var filename = "1";
